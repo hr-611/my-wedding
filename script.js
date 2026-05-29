@@ -365,12 +365,45 @@ const parentsHTML = `
     $('#greetingParents').innerHTML = parentsHTML;
   }
 
-  /* ═══════════════════════════════════════════
-     Calendar Section
+/* ═══════════════════════════════════════════
+     Calendar Rendering (동적 달력 그리기 복구 🗓️)
      ═══════════════════════════════════════════ */
-function initCalendar() {
-  // 캘린더 사용 안함
-}
+
+  function initCalendar() {
+    const grid = $('#calendarGrid');
+    if (!grid) return;
+
+    const weddingDate = getWeddingDateTime();
+    const year = weddingDate.getFullYear();
+    const month = weddingDate.getMonth();
+    const todayDate = weddingDate.getDate();
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    grid.innerHTML = '';
+
+    for (let i = 0; i < firstDayIndex; i++) {
+      const span = document.createElement('span');
+      span.className = 'empty';
+      grid.appendChild(span);
+    }
+
+    for (let d = 1; d <= totalDays; d++) {
+      const span = document.createElement('span');
+      span.textContent = d;
+
+      const dayOfWeek = (firstDayIndex + d - 1) % 7;
+      if (dayOfWeek === 0) span.className = 'sun';
+      if (dayOfWeek === 6) span.className = 'sat';
+
+      if (d === todayDate) {
+        span.classList.add('wedding-day');
+      }
+
+      grid.appendChild(span);
+    }
+  }
 
 
   /* ═══════════════════════════════════════════
@@ -665,6 +698,7 @@ function initCalendar() {
     initHero();
     initCountdown();
 initGreeting();
+    initCalendar(); //
 
 showLoadingPlaceholders();
 

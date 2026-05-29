@@ -1273,7 +1273,7 @@ a {
    Scroll Animations
    ═══════════════════════════════════════════ */
 .animate-item {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.8s ease, transform 0.8s ease;
   will-change: opacity, transform;
 }

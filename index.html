@@ -113,14 +113,31 @@
       예식 일시
     </h2>
 
-<p class="calendar-text">
-  2026년 9월 12일 토요일 오후 4시 50분
-</p>
+    <p class="calendar-text animate-item" data-animate="fade-up">
+      2026년 9월 12일 토요일 오후 4시 50분
+    </p>
+
+    <div class="calendar__wrap animate-item" data-animate="fade-up">
+      <div class="calendar__grid-header">
+        <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+      </div>
+      <div id="calendarGrid" class="calendar__grid-body">
+        </div>
+    </div>
+
+    <div class="calendar__countdown animate-item" data-animate="fade-up">
+      <p id="countdownLabel" class="countdown-label"></p>
+      <div class="countdown-timer">
+        <div class="time-box"><span id="countDays">00</span><span class="unit">일</span></div>
+        <div class="time-box"><span id="countHours">00</span><span class="unit">시</span></div>
+        <div class="time-box"><span id="countMinutes">00</span><span class="unit">분</span></div>
+        <div class="time-box"><span id="countSeconds">00</span><span class="unit">초</span></div>
+      </div>
+    </div>
   </div>
 
   <div class="wc-divider"></div>
 </section>
-
     <!-- ─── Our Story Section ─── -->
     <section class="section story" id="story">
       <div class="wc-blob wc-blob--story"></div>

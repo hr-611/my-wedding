@@ -1403,3 +1403,10 @@ a {
     display: none !important;
   }
 }
+.calendar-text {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-top: 20px;
+}

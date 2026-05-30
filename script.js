@@ -136,7 +136,7 @@
       return;
     }
 
-    namesEl.textContent = `${CONFIG.groom.name}  &  ${CONFIG.bride.name}`;
+    namesEl.textContent = `${CONFIG.groom.name}  ❤  ${CONFIG.bride.name}`;
 
     btn.addEventListener('click', () => {
       curtain.classList.add('is-open');

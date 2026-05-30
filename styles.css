@@ -1425,3 +1425,20 @@ a {
   padding: 1.5rem !important; /* 달력 안쪽 여백 추가 */
   margin-bottom: 2rem !important; /* 달력 아래쪽 여백 */
 }
+/* 계좌번호 아코디언 상자를 하얀색 네모 박스로 확실하게 분리 */
+.accordion {
+  background-color: #ffffff !important; /* 상자 전체를 완전한 흰색으로 */
+  border-radius: 12px !important; /* 모서리 둥글게 */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05) !important; /* 부드러운 그림자 추가 */
+  border: none !important; /* 원래 있던 연한 테두리 선은 제거해서 더 깔끔하게 */
+}
+
+/* 계좌번호 상자에 마우스를 올렸을 때(hover) 배경색 유지 */
+.accordion__trigger:hover {
+  background-color: #ffffff !important; 
+}
+
+/* 계좌번호가 열렸을 때 나오는 패널 배경도 흰색으로 유지 */
+.accordion__panel {
+  background-color: #ffffff !important;
+}

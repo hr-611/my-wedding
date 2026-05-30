@@ -381,7 +381,16 @@ const parentsHTML = `
     const firstDayIndex = new Date(year, month, 1).getDay();
     const totalDays = new Date(year, month + 1, 0).getDate();
 
-    grid.innerHTML = '';
+    // 💡 원래 지워지던 요일(일~토) 헤더를 자바스크립트가 지운 직후 다시 채워넣어 줍니다.
+    grid.innerHTML = `
+      <span class="sun">일</span>
+      <span>월</span>
+      <span>화</span>
+      <span>수</span>
+      <span>목</span>
+      <span>금</span>
+      <span class="sat">토</span>
+    `;
 
     for (let i = 0; i < firstDayIndex; i++) {
       const span = document.createElement('span');
@@ -404,7 +413,6 @@ const parentsHTML = `
       grid.appendChild(span);
     }
   }
-
 
   /* ═══════════════════════════════════════════
      Story Section

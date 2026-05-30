@@ -176,26 +176,12 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           주소 복사
         </button>
-
-      <!-- 진짜 지도(카카오맵) 삽입 (안전한 iframe 방식) -->
-        <div class="location__map animate-item" data-animate="scale-in" style="width: 100%; height: 260px; overflow: hidden; border-radius: var(--radius-lg);">
-          
-          <!-- 자바스크립트 에러 방지용 가짜 이미지 (그대로 둠) -->
-          <img id="locationMapImg" style="display: none;">
-          
-          <!-- 👇👇 충돌 없는 iframe 방식으로 변경 👇👇 -->
-          <iframe 
-            src="https://m.map.kakao.com/actions/detailMapView?id=12140656&viewmap=true" 
-            width="100%" 
-            height="100%" 
-            frameborder="0" 
-            style="border:0;" 
-            allowfullscreen>
-          </iframe>
-          <!-- 👆👆 변경 완료 👆👆 -->
-          
+        
+        <!-- 👇 원래의 예쁜 약도 이미지 태그로 완벽하게 원상복구 👇 -->
+        <div class="location__map animate-item" data-animate="scale-in">
+          <img class="location__map-img" id="locationMapImg" src="" alt="약도" loading="lazy">
         </div>
-
+        
         <div class="location__links animate-item" data-animate="fade-up">
           <a class="btn btn--kakao" id="kakaoMapBtn" href="#" target="_blank" rel="noopener">카카오맵</a>
           <a class="btn btn--naver" id="naverMapBtn" href="#" target="_blank" rel="noopener">네이버지도</a>
@@ -203,6 +189,7 @@
       </div>
       <div class="wc-divider"></div>
     </section>
+
 
 
     <!-- ─── Account Section (축의금) ─── -->

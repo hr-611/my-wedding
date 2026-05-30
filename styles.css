@@ -1,3 +1,13 @@
+보내주신 기존 styles.css 파일을 보니 문제의 원인이 확실하게 보입니다!
+
+이미 .calendar__days와 .calendar__weekday 같은 정렬용 클래스들이 클래스명만 조금 다르게 정의되어 있었는데, 자바스크립트에서 생성하는 태그들과 이름이 안 맞아서 스타일이 적용되지 않았던 거였어요.
+
+기존 코드를 깔끔하게 유지하면서, 현재 스크립트 구조에 맞춰 달력 그리드(Grid)와 디데이(Countdown) 위치를 완벽하게 정렬한 수정본입니다.
+
+기존 styles.css 내용을 전부 다 지우시고, 아래 코드를 그대로 전체 복사(Ctrl + A -> Ctrl + V)해서 붙여넣기 해주세요!
+
+💻 최종 수정된 styles.css (전체 코드)
+CSS
 /* ═══════════════════════════════════════════
    Watercolor Soft Wedding Invitation
    Korean Mobile 청첩장 - Styles
@@ -779,12 +789,13 @@ a {
 }
 
 /* ═══════════════════════════════════════════
-   Calendar Section
+   Calendar Section (달력 정렬 오류 완벽 수정 🗓️)
    ═══════════════════════════════════════════ */
 .calendar-section {
   background-color: var(--color-bg-alt);
 }
 
+/* 달력 카드를 감싸는 흰색 박스 */
 .calendar {
   max-width: 360px;
   margin: 0 auto var(--spacing-lg);
@@ -803,61 +814,43 @@ a {
   color: var(--color-accent-dark);
 }
 
-.calendar__weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0;
-  margin-bottom: 0.25rem;
-}
-
-.calendar__weekday {
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: var(--color-text-muted);
-  text-align: center;
-  padding: 0.5rem 0;
-}
-
-.calendar__weekday:first-child {
-  color: #d4a0a0;
-}
-
-.calendar__weekday:last-child {
-  color: #8eaec4;
-}
-
+/* [수정] 자바스크립트(#calendarGrid)와 매칭되도록 그리드 레이아웃 선언 */
 .calendar__days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0;
+  grid-template-columns: repeat(7, 1fr); /* 7열(일~토)로 자동 배분 */
+  row-gap: 10px;                         /* 위아래 행 간격 추가 */
+  margin-top: 10px;
 }
 
-.calendar__day {
-  text-align: center;
-  padding: 0.5rem 0;
-  font-size: 0.8125rem;
+/* [수정] 개별 요일/날짜 칸의 텍스트가 겹치지 않고 정중앙 정렬되도록 처리 */
+.calendar__days span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+  margin: 0 auto;
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--color-text-light);
-  position: relative;
 }
 
-.calendar__day:nth-child(7n+1) {
-  color: #d4a0a0;
-}
+/* 일요일, 토요일 색상 정의 */
+.calendar__days .sun { color: #d4a0a0; }
+.calendar__days .sat { color: #8eaec4; }
 
-.calendar__day:nth-child(7n) {
-  color: #8eaec4;
-}
-
-.calendar__day.is-empty {
+/* 빈칸 숨기기 */
+.calendar__days .empty {
   visibility: hidden;
 }
 
-.calendar__day.is-today {
+/* 결혼식 당일 표시 (핑크색 물방울/동그라미 포인트) */
+.calendar__days .wedding-day {
   font-weight: 700;
-  color: #fff;
+  color: #fff !important;
   background: linear-gradient(135deg, var(--color-lavender), var(--color-accent));
   border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(196, 168, 212, 0.4);
 }
 
 .calendar-actions {
@@ -1377,6 +1370,15 @@ a {
   }
 }
 
+/* ─── 추가 텍스트 커스텀 ─── */
+.calendar-text {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+  margin-top: 20px;
+}
+
 /* ═══════════════════════════════════════════
    Print (hide interactive elements)
    ═══════════════════════════════════════════ */
@@ -1402,11 +1404,4 @@ a {
   .wc-divider {
     display: none !important;
   }
-}
-.calendar-text {
-  text-align: center;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #555;
-  margin-top: 20px;
 }

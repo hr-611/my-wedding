@@ -7,14 +7,17 @@
   'use strict';
 
   /* ═══════════════════════════════════════════
-     Utility Helpers
+     Utility Helpers (CONFIG 에러 완벽 방지 🛡️)
      ═══════════════════════════════════════════ */
 
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
   function formatDate(dateStr, timeStr) {
-    const d = new Date(`${dateStr}T${timeStr}:00`);
+    const dStr = dateStr || "2026-09-12";
+    const tStr = timeStr || "16:50";
+    
+    const d = new Date(`${dStr}T${tStr}:00`);
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
@@ -29,7 +32,9 @@
   }
 
   function getWeddingDateTime() {
-    return new Date(`${CONFIG.wedding.date}T${CONFIG.wedding.time}:00`);
+    const dStr = (typeof CONFIG !== 'undefined' && CONFIG.wedding) ? CONFIG.wedding.date : "2026-09-12";
+    const tStr = (typeof CONFIG !== 'undefined' && CONFIG.wedding) ? CONFIG.wedding.time : "16:50";
+    return new Date(`${dStr}T${tStr}:00`);
   }
 
   /* ═══════════════════════════════════════════
@@ -74,6 +79,7 @@
   let toastTimer = null;
   function showToast(message) {
     const el = $('#toast');
+    if (!el) return;
     el.textContent = message;
     el.classList.add('is-visible');
     clearTimeout(toastTimer);
@@ -109,6 +115,7 @@
      ═══════════════════════════════════════════ */
 
   function setMetaTags() {
+    if (typeof CONFIG === 'undefined' || !CONFIG.meta) return;
     const m = CONFIG.meta;
     document.title = m.title;
     const setMeta = (attr, val, content) => {
@@ -122,11 +129,7 @@
   }
 
   /* ═══════════════════════════════════════════
-     Curtain (Watercolor Wash)
-     ═══════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════
-     Curtain (Watercolor Wash - 버튼 안 눌리는 오류 완벽 해결 🔓)
+     Curtain (Watercolor Wash - 버튼 먹통 현상 완벽 해결 🔓)
      ═══════════════════════════════════════════ */
 
   function initCurtain() {
@@ -136,9 +139,8 @@
 
     if (!curtain || !btn) return;
 
-    // CONFIG 값이 혹시 안 불러와졌을 때를 대비한 안전장치
-    const groomName = (typeof CONFIG !== 'undefined' && CONFIG.groom) ? CONFIG.groom.name : '신랑';
-    const brideName = (typeof CONFIG !== 'undefined' && CONFIG.bride) ? CONFIG.bride.name : '신부';
+    const groomName = (typeof CONFIG !== 'undefined' && CONFIG.groom) ? CONFIG.groom.name : "상준";
+    const brideName = (typeof CONFIG !== 'undefined' && CONFIG.bride) ? CONFIG.bride.name : "해림";
     const useCurtain = (typeof CONFIG !== 'undefined') ? CONFIG.useCurtain : true;
 
     if (useCurtain === false) {
@@ -152,7 +154,6 @@
       namesEl.textContent = `${groomName}  &  ${brideName}`;
     }
 
-    // 💡 버튼을 누르면 에러 없이 무조건 막이 열리고 스크롤이 풀리도록 고쳤습니다!
     btn.addEventListener('click', () => {
       curtain.classList.add('is-open');
       document.body.classList.remove('no-scroll');
@@ -170,592 +171,4 @@
      ═══════════════════════════════════════════ */
 
   function initSparkles() {
-    const canvas = $('#sparkleCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    const particles = [];
-    const PARTICLE_COUNT = 30;
-
-    const colors = [
-      'rgba(232, 223, 240, 0.6)',  // lavender
-      'rgba(245, 224, 224, 0.6)',  // blush
-      'rgba(220, 232, 240, 0.55)', // sky
-      'rgba(224, 240, 232, 0.55)', // mint
-      'rgba(196, 168, 212, 0.4)',  // accent
-      'rgba(255, 255, 255, 0.7)'   // white sparkle
-    ];
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-
-    resize();
-    window.addEventListener('resize', resize);
-
-    class Particle {
-      constructor() {
-        this.reset(true);
-      }
-
-      reset(initial = false) {
-        this.x = Math.random() * width;
-        this.y = initial ? Math.random() * height * -1 : -20;
-        this.size = 3 + Math.random() * 6;
-        this.speedY = 0.3 + Math.random() * 0.8;
-        this.speedX = -0.2 + Math.random() * 0.4;
-        this.rotation = Math.random() * Math.PI * 2;
-        this.rotSpeed = (Math.random() - 0.5) * 0.03;
-        this.oscillateAmp = 15 + Math.random() * 25;
-        this.oscillateSpeed = 0.008 + Math.random() * 0.015;
-        this.oscillateOffset = Math.random() * Math.PI * 2;
-        this.opacity = 0.3 + Math.random() * 0.5;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-        this.t = 0;
-        // 0 = circle confetti, 1 = sparkle star, 2 = soft blob
-        this.type = Math.floor(Math.random() * 3);
-      }
-
-      update() {
-        this.t++;
-        this.y += this.speedY;
-        this.x += this.speedX + Math.sin(this.t * this.oscillateSpeed + this.oscillateOffset) * 0.4;
-        this.rotation += this.rotSpeed;
-        if (this.y > height + 20) this.reset();
-      }
-
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation);
-        ctx.globalAlpha = this.opacity;
-
-        if (this.type === 0) {
-          // Circle confetti
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
-          ctx.fill();
-        } else if (this.type === 1) {
-          // Sparkle star (4-point)
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          const s = this.size * 0.8;
-          for (let i = 0; i < 4; i++) {
-            const angle = (i * Math.PI) / 2;
-            ctx.lineTo(Math.cos(angle) * s, Math.sin(angle) * s);
-            const midAngle = angle + Math.PI / 4;
-            ctx.lineTo(Math.cos(midAngle) * s * 0.3, Math.sin(midAngle) * s * 0.3);
-          }
-          ctx.closePath();
-          ctx.fill();
-        } else {
-          // Soft blob
-          ctx.fillStyle = this.color;
-          ctx.beginPath();
-          ctx.arc(0, 0, this.size * 0.7, 0, Math.PI * 2);
-          ctx.fill();
-        }
-
-        ctx.restore();
-      }
-    }
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  }
-
- /* ═══════════════════════════════════════════
-     Hero Section
-     ═══════════════════════════════════════════ */
-
-  function initHero() {
-    const heroPhoto = $('#heroPhoto');
-    if (heroPhoto) heroPhoto.src = 'images/hero/1.jpg';
-    
-    // 💡 HTML에 id="heroNames"가 없더라도 에러 나서 멈추지 않게 안전장치를 만듭니다.
-    const heroNames = $('#heroNames');
-    if (heroNames) {
-      heroNames.textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
-    }
-    
-    const heroDate = $('#heroDate');
-    if (heroDate) heroDate.textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
-    
-    const heroVenue = $('#heroVenue');
-    if (heroVenue) heroVenue.textContent = CONFIG.wedding.venue;
-  }
-
-  /* ═══════════════════════════════════════════
-     Countdown
-     ═══════════════════════════════════════════ */
-
-  function initCountdown() {
-    const target = getWeddingDateTime();
-
-    function update() {
-      const now = new Date();
-      const diff = target - now;
-
-      const labelEl = $('#countdownLabel');
-
-      if (diff <= 0) {
-        $('#countDays').textContent = '0';
-        $('#countHours').textContent = '0';
-        $('#countMinutes').textContent = '0';
-        $('#countSeconds').textContent = '0';
-        labelEl.textContent = '결혼식이 시작되었습니다';
-        return;
-      }
-
-      const totalDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      labelEl.textContent = `결혼식까지 D-${totalDays}`;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      $('#countDays').textContent = days;
-      $('#countHours').textContent = String(hours).padStart(2, '0');
-      $('#countMinutes').textContent = String(minutes).padStart(2, '0');
-      $('#countSeconds').textContent = String(seconds).padStart(2, '0');
-    }
-
-    update();
-    setInterval(update, 1000);
-  }
-
-  /* ═══════════════════════════════════════════
-     Greeting Section
-     ═══════════════════════════════════════════ */
-
-  function initGreeting() {
-    $('#greetingTitle').textContent = CONFIG.greeting.title;
-    $('#greetingContent').textContent = CONFIG.greeting.content;
-
-    const g = CONFIG.groom;
-    const b = CONFIG.bride;
-
-   function parentLine(father, mother, fatherDeceased, motherDeceased) {
-  const fd = fatherDeceased ? ' deceased' : '';
-  const md = motherDeceased ? ' deceased' : '';
-
-  if (father && mother) {
-    return `<span class="${fd}">${father}</span> · <span class="${md}">${mother}</span>`;
-  }
-
-  if (father) {
-    return `<span class="${fd}">${father}</span>`;
-  }
-
-  if (mother) {
-    return `<span class="${md}">${mother}</span>`;
-  }
-
-  return '';
-}
-
-const parentsHTML = `
-  <div class="parent-row">
-    <span>
-      ${parentLine(g.father, g.mother, g.fatherDeceased, g.motherDeceased)}의 아들
-    </span>
-    <span class="parent-dot">●</span>
-    <span class="child-name">${g.name}</span>
-  </div>
-
-  <div class="parent-row">
-    <span>
-      ${parentLine(b.father, b.mother, b.fatherDeceased, b.motherDeceased)}의 딸
-    </span>
-    <span class="parent-dot">●</span>
-    <span class="child-name">${b.name}</span>
-  </div>
-`;
-
-    $('#greetingParents').innerHTML = parentsHTML;
-  }
-
-/* ═══════════════════════════════════════════
-     Calendar Rendering (동적 달력 그리기 복구 🗓️)
-     ═══════════════════════════════════════════ */
-
-  function initCalendar() {
-    const grid = $('#calendarGrid');
-    if (!grid) return;
-
-    const weddingDate = getWeddingDateTime();
-    const year = weddingDate.getFullYear();
-    const month = weddingDate.getMonth();
-    const todayDate = weddingDate.getDate();
-
-    const firstDayIndex = new Date(year, month, 1).getDay();
-    const totalDays = new Date(year, month + 1, 0).getDate();
-
-    // 💡 원래 지워지던 요일(일~토) 헤더를 자바스크립트가 지운 직후 다시 채워넣어 줍니다.
-    grid.innerHTML = `
-      <span class="sun">일</span>
-      <span>월</span>
-      <span>화</span>
-      <span>수</span>
-      <span>목</span>
-      <span>금</span>
-      <span class="sat">토</span>
-    `;
-
-    for (let i = 0; i < firstDayIndex; i++) {
-      const span = document.createElement('span');
-      span.className = 'empty';
-      grid.appendChild(span);
-    }
-
-    for (let d = 1; d <= totalDays; d++) {
-      const span = document.createElement('span');
-      span.textContent = d;
-
-      const dayOfWeek = (firstDayIndex + d - 1) % 7;
-      if (dayOfWeek === 0) span.className = 'sun';
-      if (dayOfWeek === 6) span.className = 'sat';
-
-      if (d === todayDate) {
-        span.classList.add('wedding-day');
-      }
-
-      grid.appendChild(span);
-    }
-  }
-
-  /* ═══════════════════════════════════════════
-     Story Section
-     ═══════════════════════════════════════════ */
-
-  function initStory(storyImages) {
-    $('#storyTitle').textContent = CONFIG.story.title;
-    $('#storyContent').textContent = CONFIG.story.content;
-
-    const container = $('#storyPhotos');
-    const placeholder = container.querySelector('.loading-placeholder');
-    if (placeholder) placeholder.remove();
-
-    if (storyImages.length === 0) return;
-
-    storyImages.forEach((src, i) => {
-      const div = document.createElement('div');
-      div.className = 'story__photo-item animate-item';
-      div.setAttribute('data-animate', 'fade-up');
-      div.innerHTML = `<img src="${src}" alt="스토리 사진 ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => openPhotoModal(storyImages, i));
-      container.appendChild(div);
-    });
-  }
-
-  /* ═══════════════════════════════════════════
-     Gallery Section
-     ═══════════════════════════════════════════ */
-
-  function initGallery(galleryImages) {
-    const grid = $('#galleryGrid');
-    const placeholder = grid.querySelector('.loading-placeholder');
-    if (placeholder) placeholder.remove();
-
-    if (galleryImages.length === 0) {
-      const gallerySection = $('#gallery');
-      if (gallerySection) gallerySection.style.display = 'none';
-      return;
-    }
-
-    galleryImages.forEach((src, i) => {
-      const div = document.createElement('div');
-      div.className = 'gallery__item animate-item';
-      div.setAttribute('data-animate', 'scale-in');
-      div.innerHTML = `<img src="${src}" alt="갤러리 사진 ${i + 1}" loading="lazy">`;
-      div.addEventListener('click', () => openPhotoModal(galleryImages, i));
-      grid.appendChild(div);
-    });
-  }
-
-  /* ═══════════════════════════════════════════
-     Photo Modal (with swipe)
-     ═══════════════════════════════════════════ */
-
-  let modalImages = [];
-  let modalIndex = 0;
-  let touchStartX = 0;
-  let touchEndX = 0;
-  let touchStartY = 0;
-  let touchEndY = 0;
-
-  function openPhotoModal(images, index) {
-    modalImages = images;
-    modalIndex = index;
-    showModalImage();
-    $('#photoModal').classList.add('is-open');
-    document.body.classList.add('no-scroll');
-  }
-
-  function closePhotoModal() {
-    $('#photoModal').classList.remove('is-open');
-    document.body.classList.remove('no-scroll');
-  }
-
-  function showModalImage() {
-    const img = $('#modalImg');
-    img.src = modalImages[modalIndex];
-    $('#modalCounter').textContent = `${modalIndex + 1} / ${modalImages.length}`;
-
-    $('#modalPrev').style.display = modalIndex > 0 ? '' : 'none';
-    $('#modalNext').style.display = modalIndex < modalImages.length - 1 ? '' : 'none';
-  }
-
-  function modalNavigate(dir) {
-    const newIndex = modalIndex + dir;
-    if (newIndex >= 0 && newIndex < modalImages.length) {
-      modalIndex = newIndex;
-      showModalImage();
-    }
-  }
-
-  function initPhotoModal() {
-    $('#modalClose').addEventListener('click', closePhotoModal);
-    $('#modalPrev').addEventListener('click', () => modalNavigate(-1));
-    $('#modalNext').addEventListener('click', () => modalNavigate(1));
-
-    const modal = $('#photoModal');
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal || e.target.id === 'modalContainer') {
-        closePhotoModal();
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (!modal.classList.contains('is-open')) return;
-      if (e.key === 'Escape') closePhotoModal();
-      if (e.key === 'ArrowLeft') modalNavigate(-1);
-      if (e.key === 'ArrowRight') modalNavigate(1);
-    });
-
-    // Swipe support
-    const container = $('#modalContainer');
-
-    container.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-      touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
-
-    container.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      touchEndY = e.changedTouches[0].screenY;
-      handleSwipe();
-    }, { passive: true });
-  }
-
-  function handleSwipe() {
-    const diffX = touchStartX - touchEndX;
-    const diffY = touchStartY - touchEndY;
-    const minSwipe = 50;
-
-    if (Math.abs(diffX) < minSwipe || Math.abs(diffX) < Math.abs(diffY)) return;
-
-    if (diffX > 0) {
-      modalNavigate(1);
-    } else {
-      modalNavigate(-1);
-    }
-  }
-
-  /* ═══════════════════════════════════════════
-     Location Section
-     ═══════════════════════════════════════════ */
-
-  function initLocation() {
-    const w = CONFIG.wedding;
-    const ml = CONFIG.mapLinks;
-    $('#locationVenue').textContent = w.venue;
-    $('#locationHall').textContent = w.hall;
-    $('#locationAddress').textContent = w.address;
-    $('#locationTel').textContent = w.tel ? `Tel. ${w.tel}` : '';
-    $('#locationMapImg').src = 'images/location/1.jpg';
-    $('#kakaoMapBtn').href = ml.kakao || '#';
-    $('#naverMapBtn').href = ml.naver || '#';
-
-    $('#copyAddressBtn').addEventListener('click', () => {
-      copyToClipboard(w.address, '주소가 복사되었습니다');
-    });
-  }
-
-  /* ═══════════════════════════════════════════
-     Account Section (축의금)
-     ═══════════════════════════════════════════ */
-
-  function renderAccounts(accounts, containerId) {
-    const container = $(`#${containerId}`);
-    accounts.forEach((acc) => {
-      const item = document.createElement('div');
-      item.className = 'account-item';
-      item.innerHTML = `
-        <div class="account-item__info">
-          <div class="account-item__role">${acc.role}</div>
-          <div class="account-item__detail">
-            <span class="account-item__name">${acc.name || ''}</span>
-            ${acc.bank} ${acc.number}
-          </div>
-        </div>
-        <button class="account-item__copy" data-account="${acc.bank} ${acc.number} ${acc.name || ''}">
-          복사
-        </button>
-      `;
-      container.appendChild(item);
-    });
-  }
-
-  function initAccordion(triggerId, panelId) {
-    const trigger = $(`#${triggerId}`);
-    const panel = $(`#${panelId}`);
-
-    trigger.addEventListener('click', () => {
-      const expanded = trigger.getAttribute('aria-expanded') === 'true';
-      trigger.setAttribute('aria-expanded', !expanded);
-
-      if (!expanded) {
-        panel.style.maxHeight = panel.scrollHeight + 'px';
-      } else {
-        panel.style.maxHeight = '0';
-      }
-    });
-  }
-
-  function initAccounts() {
-    renderAccounts(CONFIG.accounts.groom, 'groomAccountList');
-    renderAccounts(CONFIG.accounts.bride, 'brideAccountList');
-
-    initAccordion('groomAccordion', 'groomAccordionPanel');
-    initAccordion('brideAccordion', 'brideAccordionPanel');
-
-    // Copy account delegates
-    document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.account-item__copy');
-      if (!btn) return;
-      const text = btn.dataset.account;
-      copyToClipboard(text, '계좌번호가 복사되었습니다');
-    });
-  }
-
-  /* ═══════════════════════════════════════════
-     Footer
-     ═══════════════════════════════════════════ */
-
-  function initFooter() {
-    const dt = getWeddingDateTime();
-    const year = dt.getFullYear();
-    const month = String(dt.getMonth() + 1).padStart(2, '0');
-    const day = String(dt.getDate()).padStart(2, '0');
-    $('#footerText').textContent = `${CONFIG.groom.name} & ${CONFIG.bride.name} — ${year}.${month}.${day}`;
-  }
-
-  /* ═══════════════════════════════════════════
-     Loading Placeholders
-     ═══════════════════════════════════════════ */
-
-  function showLoadingPlaceholders() {
-    const storyPhotos = $('#storyPhotos');
-    const galleryGrid = $('#galleryGrid');
-
-    const placeholderHTML = '<div class="loading-placeholder"><span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span></div>';
-
-    if (storyPhotos) storyPhotos.innerHTML = placeholderHTML;
-    if (galleryGrid) galleryGrid.innerHTML = placeholderHTML;
-  }
-
-  /* ═══════════════════════════════════════════
-     Scroll Animations (IntersectionObserver)
-     ═══════════════════════════════════════════ */
-
-  function initScrollAnimations() {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-        rootMargin: '0px 0px -40px 0px'
-      }
-    );
-
-    $$('.animate-item').forEach((el) => observer.observe(el));
-
-    // Re-observe after dynamic content is added
-    const mutObs = new MutationObserver((mutations) => {
-      mutations.forEach((m) => {
-        m.addedNodes.forEach((node) => {
-          if (node.nodeType !== 1) return;
-          if (node.classList && node.classList.contains('animate-item')) {
-            observer.observe(node);
-          }
-          if (node.querySelectorAll) {
-            node.querySelectorAll('.animate-item').forEach((el) => observer.observe(el));
-          }
-        });
-      });
-    });
-
-    mutObs.observe(document.body, { childList: true, subtree: true });
-  }
-
-  /* ═══════════════════════════════════════════
-     Init
-     ═══════════════════════════════════════════ */
-
-  async function init() {
-    setMetaTags();
-    initCurtain();
-    initHero();
-    initCountdown();
-initGreeting();
-    initCalendar(); //
-
-showLoadingPlaceholders();
-
-    initPhotoModal();
-    initLocation();
-    initAccounts();
-    initFooter();
-    initScrollAnimations();
-
-    $('#storyTitle').textContent = CONFIG.story.title;
-    $('#storyContent').textContent = CONFIG.story.content;
-
-    const [storyImages, galleryImages] = await Promise.all([
-      loadImagesFromFolder('story'),
-      loadImagesFromFolder('gallery')
-    ]);
-
-    initStory(storyImages);
-    initGallery(galleryImages);
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+    const

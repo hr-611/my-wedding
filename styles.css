@@ -1403,3 +1403,6 @@ a {
     display: none !important;
   }
 }
+.calendar-actions {
+  display: none !important;
+}

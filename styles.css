@@ -804,38 +804,51 @@ a {
   color: var(--color-accent-dark);
 }
 
-/* [수정] 자바스크립트(#calendarGrid)와 매칭되도록 그리드 레이아웃 선언 */
-.calendar__days {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7열(일~토)로 자동 배분 */
-  row-gap: 10px;                         /* 위아래 행 간격 추가 */
+/* [#calendarGrid] 자바스크립트와 매칭되도록 실제 그리드 레이아웃 선언 */
+#calendarGrid {
+  display: grid !important;
+  grid-template-columns: repeat(7, 1fr) !important; /* 7열(일~토)로 자동 배분 */
+  row-gap: 12px;                                     /* 위아래 행 간격 추가 */
   margin-top: 10px;
+  justify-items: center;
+  align-items: center;
 }
 
-/* [수정] 개별 요일/날짜 칸의 텍스트가 겹치지 않고 정중앙 정렬되도록 처리 */
-.calendar__days span {
+/* 개별 요일/날짜 칸의 텍스트가 겹치지 않고 정중앙 정렬되도록 처리 */
+#calendarGrid span,
+.calendar__weekday {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
-  width: 32px;
-  margin: 0 auto;
+  height: 34px;
+  width: 34px;
   font-size: 0.875rem;
   font-weight: 400;
   color: var(--color-text-light);
 }
 
-/* 일요일, 토요일 색상 정의 */
-.calendar__days .sun { color: #d4a0a0; }
-.calendar__days .sat { color: #8eaec4; }
+.calendar__weekday {
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* 일요일, 토요일 색상 정의 (7열 기준으로 주말 색상 지정) */
+#calendarGrid span:nth-child(7n+1),
+.calendar__weekday:first-child { 
+  color: #d4a0a0; 
+}
+#calendarGrid span:nth-child(7n),
+.calendar__weekday:last-child { 
+  color: #8eaec4; 
+}
 
 /* 빈칸 숨기기 */
-.calendar__days .empty {
+#calendarGrid .empty {
   visibility: hidden;
 }
 
 /* 결혼식 당일 표시 (핑크색 물방울/동그라미 포인트) */
-.calendar__days .wedding-day {
+#calendarGrid .wedding-day {
   font-weight: 700;
   color: #fff !important;
   background: linear-gradient(135deg, var(--color-lavender), var(--color-accent));

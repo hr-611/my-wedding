@@ -59,40 +59,41 @@
     <section class="section hero" id="hero">
       <div class="hero__overlay"></div>
       <img class="hero__photo" id="heroPhoto" src="" alt="웨딩 사진" loading="eager">
-      <div class="hero__content">
+      <div class="hero__content" style="padding-bottom: 3rem;"> <!-- 사진 맨 아래로 글씨를 내리기 위한 여백 -->
         <p class="hero__label animate-item" data-animate="fade-down">Wedding Invitation</p>
         <h1 class="hero__names animate-item" data-animate="fade-up" id="heroNames"></h1>
         <div class="hero__divider animate-item" data-animate="fade-in"></div>
         <p class="hero__date animate-item" data-animate="fade-up" id="heroDate"></p>
         <p class="hero__venue animate-item" data-animate="fade-up" id="heroVenue"></p>
       </div>
+    </section>
 
-      <!-- Countdown -->
-      <div class="countdown animate-item" data-animate="fade-up" id="countdown">
-        <p class="countdown__label" id="countdownLabel"></p>
-        <div class="countdown__timer">
-          <div class="countdown__item">
-            <span class="countdown__number" id="countDays">0</span>
-            <span class="countdown__unit">일</span>
-          </div>
-          <div class="countdown__sep">:</div>
-          <div class="countdown__item">
-            <span class="countdown__number" id="countHours">0</span>
-            <span class="countdown__unit">시간</span>
-          </div>
-          <div class="countdown__sep">:</div>
-          <div class="countdown__item">
-            <span class="countdown__number" id="countMinutes">0</span>
-            <span class="countdown__unit">분</span>
-          </div>
-          <div class="countdown__sep">:</div>
-          <div class="countdown__item">
-            <span class="countdown__number" id="countSeconds">0</span>
-            <span class="countdown__unit">초</span>
-          </div>
+    <!-- 👇 사진 밖으로 빼낸 디데이(카운트다운) 영역 👇 -->
+    <div class="countdown animate-item" data-animate="fade-up" id="countdown" style="padding: 3rem 1.5rem 0; background-color: var(--color-bg);">
+      <p class="countdown__label" id="countdownLabel"></p>
+      <div class="countdown__timer">
+        <div class="countdown__item">
+          <span class="countdown__number" id="countDays">0</span>
+          <span class="countdown__unit">일</span>
+        </div>
+        <div class="countdown__sep">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="countHours">0</span>
+          <span class="countdown__unit">시간</span>
+        </div>
+        <div class="countdown__sep">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="countMinutes">0</span>
+          <span class="countdown__unit">분</span>
+        </div>
+        <div class="countdown__sep">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="countSeconds">0</span>
+          <span class="countdown__unit">초</span>
         </div>
       </div>
-    </section>
+    </div>
+    <!-- 👆 카운트다운 끝 👆 -->
 
     <!-- ─── Greeting Section ─── -->
     <section class="section greeting" id="greeting">

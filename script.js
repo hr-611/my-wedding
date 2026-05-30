@@ -136,7 +136,10 @@
       return;
     }
 
-    namesEl.textContent = `${CONFIG.groom.name}  ❤  ${CONFIG.bride.name}`;
+  const groomFirstName = CONFIG.groom.name.substring(1);
+const brideFirstName = CONFIG.bride.name.substring(1);
+namesEl.textContent = `${groomFirstName}  ❤  ${brideFirstName}`;
+
 
     btn.addEventListener('click', () => {
       curtain.classList.add('is-open');

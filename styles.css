@@ -1404,15 +1404,18 @@ a {
   display: none !important;
 }
 
-/* 사진 위 텍스트 가독성을 위한 부드러운 그림자 (글자 색상과 투명도는 원래 디자인 유지) */
+/* 사진 위 텍스트 가독성을 위한 부드러운 그림자 (이름 제외) */
 .hero__label,
 .hero__date,
-.hero__venue,
-.hero__names {
+.hero__venue {
   text-shadow: 
     0 0 5px rgba(255, 255, 255, 0.9),
-    0 0 10px rgba(255, 255, 255, 0.8),
-    0 0 15px rgba(255, 255, 255, 0.7) !important;
+    0 0 10px rgba(255, 255, 255, 0.7) !important;
+}
+
+/* 이름(반상준 · 이해림) 글씨는 흰색 그림자 효과 없애기 */
+.hero__names {
+  text-shadow: none !important;
 }
 /* 달력을 약도처럼 하얀색 네모 박스로 분리 */
 .calendar {

@@ -176,8 +176,20 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
           주소 복사
         </button>
-        <div class="location__map animate-item" data-animate="scale-in">
-          <img class="location__map-img" id="locationMapImg" src="" alt="약도" loading="lazy">
+      <!-- 진짜 지도(카카오맵) 삽입 -->
+        <div class="location__map animate-item" data-animate="scale-in" style="width: 100%; height: 260px; overflow: hidden; border-radius: var(--radius-lg);">
+          <!-- 카카오맵 임베드 코드 (웨딩여율리 좌표) -->
+          <!-- * 카카오맵 약관에 따라 임베드 지도는 이 태그를 사용합니다 -->
+          <div id="daumRoughmapContainer1704256800000" class="root_daum_roughmap roughmapContainer"></div>
+          <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/roughmap/loader.js"></script>
+          <script charset="UTF-8">
+            new daum.roughmap.Lander({
+              "timestamp" : "1704256800000",
+              "key" : "2hm3s", // 웨딩여율리(한국노총빌딩) 좌표값
+              "mapWidth" : "100%",
+              "mapHeight" : "260"
+            }).render();
+          </script>
         </div>
         <div class="location__links animate-item" data-animate="fade-up">
           <a class="btn btn--kakao" id="kakaoMapBtn" href="#" target="_blank" rel="noopener">카카오맵</a>

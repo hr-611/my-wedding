@@ -263,15 +263,25 @@
     animate();
   }
 
-  /* ═══════════════════════════════════════════
+ /* ═══════════════════════════════════════════
      Hero Section
      ═══════════════════════════════════════════ */
 
   function initHero() {
-    $('#heroPhoto').src = 'images/hero/1.jpg';
-    $('#heroNames').textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
-    $('#heroDate').textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
-    $('#heroVenue').textContent = CONFIG.wedding.venue;
+    const heroPhoto = $('#heroPhoto');
+    if (heroPhoto) heroPhoto.src = 'images/hero/1.jpg';
+    
+    // 💡 HTML에 id="heroNames"가 없더라도 에러 나서 멈추지 않게 안전장치를 만듭니다.
+    const heroNames = $('#heroNames');
+    if (heroNames) {
+      heroNames.textContent = `${CONFIG.groom.name}  ·  ${CONFIG.bride.name}`;
+    }
+    
+    const heroDate = $('#heroDate');
+    if (heroDate) heroDate.textContent = formatDate(CONFIG.wedding.date, CONFIG.wedding.time);
+    
+    const heroVenue = $('#heroVenue');
+    if (heroVenue) heroVenue.textContent = CONFIG.wedding.venue;
   }
 
   /* ═══════════════════════════════════════════

@@ -1414,3 +1414,11 @@ a {
     0 0 10px rgba(255, 255, 255, 0.8),
     0 0 15px rgba(255, 255, 255, 0.7) !important;
 }
+/* 달력을 약도처럼 하얀색 네모 박스로 분리 */
+.calendar {
+  background-color: #ffffff !important; /* 달력 바탕을 완전한 흰색으로 */
+  border-radius: 16px !important; /* 모서리를 둥글게 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important; /* 부드러운 그림자를 줘서 입체감 추가 */
+  padding: 1.5rem !important; /* 달력 안쪽 여백 추가 */
+  margin-bottom: 2rem !important; /* 달력 아래쪽 여백 */
+}

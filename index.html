@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- Meta / OG tags - config.js 값으로 script에서 동적 설정 -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="상준❤해림 결혼합니다.">
   <meta property="og:description" content="2026.09.12 토요일 16시 50분 / 웨딩여율리">
@@ -14,7 +13,6 @@
 
   <title>Wedding Invitation</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
@@ -24,7 +22,6 @@
 </head>
 <body>
 
-  <!-- ═══ Curtain Opening (Watercolor Wash) ═══ -->
   <div id="curtain" class="curtain">
     <div class="curtain__wash curtain__wash--top"></div>
     <div class="curtain__wash curtain__wash--bottom"></div>
@@ -35,13 +32,10 @@
     </div>
   </div>
 
-  <!-- ═══ Falling Sparkles Canvas ═══ -->
   <canvas id="sparkleCanvas" class="sparkle-canvas"></canvas>
 
-  <!-- ═══ Toast Notification ═══ -->
   <div id="toast" class="toast" aria-live="polite"></div>
 
-  <!-- ═══ Photo Viewer Modal ═══ -->
   <div id="photoModal" class="photo-modal" role="dialog" aria-modal="true" aria-label="사진 보기">
     <button class="photo-modal__close" id="modalClose" aria-label="닫기">&times;</button>
     <button class="photo-modal__nav photo-modal__nav--prev" id="modalPrev" aria-label="이전 사진">&#8249;</button>
@@ -52,10 +46,8 @@
     <div class="photo-modal__counter" id="modalCounter"></div>
   </div>
 
-  <!-- ═══ Main Content ═══ -->
   <main id="mainContent" class="main-content">
 
-    <!-- ─── Hero Section ─── -->
     <section class="section hero" id="hero">
       <div class="hero__overlay"></div>
       <img class="hero__photo" id="heroPhoto" src="" alt="웨딩 사진" loading="eager">
@@ -67,7 +59,6 @@
         <p class="hero__venue animate-item" data-animate="fade-up" id="heroVenue"></p>
       </div>
 
-      <!-- Countdown -->
       <div class="countdown animate-item" data-animate="fade-up" id="countdown">
         <p class="countdown__label" id="countdownLabel"></p>
         <div class="countdown__timer">
@@ -94,7 +85,6 @@
       </div>
     </section>
 
-    <!-- ─── Greeting Section ─── -->
     <section class="section greeting" id="greeting">
       <div class="wc-blob wc-blob--greeting"></div>
       <div class="section__inner">
@@ -106,39 +96,43 @@
       <div class="wc-divider"></div>
     </section>
 
-    <!-- ─── Calendar Section ─── -->
-<section class="section calendar-section" id="calendarSection">
-  <div class="section__inner">
-    <h2 class="section__title animate-item" data-animate="fade-up">
-      예식 일시
-    </h2>
+    <section class="section calendar-section" id="calendarSection">
+      <div class="section__inner">
+        <h2 class="section__title animate-item" data-animate="fade-up">
+          예식 일시
+        </h2>
 
-    <p class="calendar-text animate-item" data-animate="fade-up">
-      2026년 9월 12일 토요일 오후 4시 50분
-    </p>
+        <p class="calendar-text animate-item" data-animate="fade-up" style="margin-bottom: 24px;">
+          2026년 9월 12일 토요일 오후 4시 50분
+        </p>
 
-    <div class="calendar__wrap animate-item" data-animate="fade-up">
-      <div class="calendar__grid-header">
-        <span class="sun">일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
-      </div>
-      <div id="calendarGrid" class="calendar__grid-body">
+        <div class="calendar animate-item" data-animate="fade-up">
+          <div class="calendar__header">September 2026</div>
+          
+          <div class="calendar__days" id="calendarGrid">
+            <span class="sun">일</span>
+            <span>월</span>
+            <span>화</span>
+            <span>수</span>
+            <span>목</span>
+            <span>금</span>
+            <span class="sat">토</span>
+          </div>
         </div>
-    </div>
 
-    <div class="calendar__countdown animate-item" data-animate="fade-up">
-      <p id="countdownLabel" class="countdown-label"></p>
-      <div class="countdown-timer">
-        <div class="time-box"><span id="countDays">00</span><span class="unit">일</span></div>
-        <div class="time-box"><span id="countHours">00</span><span class="unit">시</span></div>
-        <div class="time-box"><span id="countMinutes">00</span><span class="unit">분</span></div>
-        <div class="time-box"><span id="countSeconds">00</span><span class="unit">초</span></div>
+        <div class="calendar__countdown animate-item" data-animate="fade-up" style="margin-top: 30px;">
+          <p id="countdownLabel" class="countdown-label"></p>
+          <div class="countdown-timer">
+            <div class="time-box"><span id="countDays">00</span><span class="unit">일</span></div>
+            <div class="time-box"><span id="countHours">00</span><span class="unit">시</span></div>
+            <div class="time-box"><span id="countMinutes">00</span><span class="unit">분</span></div>
+            <div class="time-box"><span id="countSeconds">00</span><span class="unit">초</span></div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="wc-divider"></div>
-</section>
-    <!-- ─── Our Story Section ─── -->
+      <div class="wc-divider"></div>
+    </section>
     <section class="section story" id="story">
       <div class="wc-blob wc-blob--story"></div>
       <div class="section__inner">
@@ -149,7 +143,6 @@
       <div class="wc-divider"></div>
     </section>
 
-    <!-- ─── Gallery Section ─── -->
     <section class="section gallery" id="gallery">
       <div class="wc-blob wc-blob--gallery"></div>
       <div class="section__inner">
@@ -159,7 +152,6 @@
       <div class="wc-divider"></div>
     </section>
 
-    <!-- ─── Location Section ─── -->
     <section class="section location" id="location">
       <div class="wc-blob wc-blob--location"></div>
       <div class="section__inner">
@@ -185,46 +177,8 @@
       <div class="wc-divider"></div>
     </section>
 
-    <!-- ─── Account Section (축의금) ─── -->
     <section class="section account" id="account">
       <div class="wc-blob wc-blob--account"></div>
       <div class="section__inner">
         <h2 class="section__title animate-item" data-animate="fade-up">마음 전하실 곳</h2>
-        <p class="account__desc animate-item" data-animate="fade-up"> 보내주시는 따뜻한 마음<br>오래도록 간직하겠습니다.</p>
-
-        <!-- Groom Accounts -->
-        <div class="accordion animate-item" data-animate="fade-up">
-          <button class="accordion__trigger" id="groomAccordion" aria-expanded="false">
-            <span class="accordion__icon">&#10047;</span>
-            <span>신랑측 계좌번호</span>
-            <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__panel" id="groomAccordionPanel">
-            <div class="accordion__panel-inner" id="groomAccountList"></div>
-          </div>
-        </div>
-
-        <!-- Bride Accounts -->
-        <div class="accordion animate-item" data-animate="fade-up">
-          <button class="accordion__trigger" id="brideAccordion" aria-expanded="false">
-            <span class="accordion__icon">&#10047;</span>
-            <span>신부측 계좌번호</span>
-            <svg class="accordion__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__panel" id="brideAccordionPanel">
-            <div class="accordion__panel-inner" id="brideAccountList"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── Footer ─── -->
-    <footer class="footer">
-      <p class="footer__text" id="footerText"></p>
-    </footer>
-
-  </main>
-
-  <script src="script.js"></script>
-</body>
-</html>
+        <p class="account__desc animate-item" data-animate="fade-up"> 보내주시는 따뜻한 마음<br>오래도록 간직하겠습니다.</

@@ -68,8 +68,40 @@
       </div>
     </section>
 
- <!-- 👇 위아래 여백을 동일하게 맞춘 디데이(카운트다운) 영역 👇 -->
-    <div class="countdown animate-item" data-animate="fade-up" id="countdown" style="padding: 4rem 1.5rem; background-color: var(--color-bg);">
+    <!-- ─── Greeting Section ─── -->
+    <section class="section greeting" id="greeting">
+      <div class="wc-blob wc-blob--greeting"></div>
+      <div class="section__inner">
+        <div class="wc-ornament animate-item" data-animate="fade-in"></div>
+        <h2 class="section__title animate-item" data-animate="fade-up" id="greetingTitle"></h2>
+        <p class="greeting__text animate-item" data-animate="fade-up" id="greetingContent"></p>
+        <div class="greeting__parents animate-item" data-animate="fade-up" id="greetingParents"></div>
+      </div>
+      <div class="wc-divider"></div>
+    </section>
+
+<!-- ─── Calendar Section ─── -->
+<section class="section calendar-section" id="calendarSection">
+  <div class="wc-blob wc-blob--calendar"></div>
+  <div class="section__inner">
+    
+    <h2 class="section__title animate-item" data-animate="fade-up">예식 일시·장소</h2>
+    
+    <div class="calendar-info animate-item" data-animate="fade-up" style="margin-top: 0.5rem; font-size: 0.95rem; color: #4a4a4a; line-height: 1.8; text-align: center;">
+      <p>2026년 9월 12일 토요일 오후 4시 50분</p>
+      <p style="font-weight: bold; font-size: 1.05rem; margin-top: 0.3rem;">웨딩여율리</p>
+    </div>
+    
+    <div class="wc-divider" style="margin-top: 1.5rem; margin-bottom: 1.5rem;"></div>
+    
+    <!-- 달력 영역 -->
+    <div class="calendar animate-item" data-animate="scale-in" id="calendarGrid"></div>
+
+    <!-- 숨겨진 캘린더 버튼 -->
+    <div class="calendar-actions animate-item" style="display: none !important;"> ... </div>
+
+    <!-- 👇👇 이곳으로 이사 온 디데이(카운트다운) 영역 👇👇 -->
+    <div class="countdown animate-item" data-animate="fade-up" id="countdown" style="padding: 2rem 0 1rem;">
       <p class="countdown__label" id="countdownLabel"></p>
       <div class="countdown__timer">
         <div class="countdown__item">
@@ -93,50 +125,7 @@
         </div>
       </div>
     </div>
-    <!-- 👆 카운트다운 끝 👆 -->
-
-    <!-- ─── Greeting Section ─── -->
-    <section class="section greeting" id="greeting">
-      <div class="wc-blob wc-blob--greeting"></div>
-      <div class="section__inner">
-        <div class="wc-ornament animate-item" data-animate="fade-in"></div>
-        <h2 class="section__title animate-item" data-animate="fade-up" id="greetingTitle"></h2>
-        <p class="greeting__text animate-item" data-animate="fade-up" id="greetingContent"></p>
-        <div class="greeting__parents animate-item" data-animate="fade-up" id="greetingParents"></div>
-      </div>
-      <div class="wc-divider"></div>
-    </section>
-
-<!-- ─── Calendar Section ─── -->
-<section class="section calendar-section" id="calendarSection">
-  <div class="wc-blob wc-blob--calendar"></div>
-  <div class="section__inner">
-    
-    <h2 class="section__title animate-item" data-animate="fade-up">예식 일시·장소</h2>
-    
-    <!-- 1. 날짜/장소 텍스트 -->
-    <div class="calendar-info animate-item" data-animate="fade-up" style="margin-top: 0.5rem; font-size: 0.95rem; color: #4a4a4a; line-height: 1.8; text-align: center;">
-      <p>2026년 9월 12일 토요일 오후 4시 50분</p>
-      <p style="font-weight: bold; font-size: 1.05rem; margin-top: 0.3rem;">웨딩여율리 5층 라온제나홀</p>
-    </div>
-    
-    <!-- 👇 2. 원래 맨 아래 있던 구분선을 텍스트 아래로 이동했습니다 👇 -->
-    <div class="wc-divider" style="margin-top: 1.5rem; margin-bottom: 1.5rem;"></div>
-    
-    <!-- 3. 달력 (구분선 아래에 위치) -->
-    <div class="calendar animate-item" data-animate="scale-in" id="calendarGrid"></div>
-
-    <!-- 4. 캘린더 버튼 영역 (화면에서 완벽히 숨김 처리) -->
-    <div class="calendar-actions animate-item" data-animate="fade-up" style="display: none !important;">
-      <a class="btn btn--outline" id="googleCalBtn" href="#" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
-        Google 캘린더
-      </a>
-      <button class="btn btn--outline" id="icsDownloadBtn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M12 14v4M10 16l2 2 2-2"/></svg>
-        Apple 캘린더
-      </button>
-    </div>
+    <!-- 👆👆 카운트다운 끝 👆👆 -->
 
   </div>
 </section>

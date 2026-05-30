@@ -177,23 +177,23 @@
           주소 복사
         </button>
 
-      <!-- 진짜 지도(카카오맵) 삽입 -->
+      <!-- 진짜 지도(카카오맵) 삽입 (안전한 iframe 방식) -->
         <div class="location__map animate-item" data-animate="scale-in" style="width: 100%; height: 260px; overflow: hidden; border-radius: var(--radius-lg);">
           
-          <!-- 👇👇 이 한 줄을 꼭 추가해 주세요! (자바스크립트 에러 방지용 가짜 이미지) 👇👇 -->
+          <!-- 자바스크립트 에러 방지용 가짜 이미지 (그대로 둠) -->
           <img id="locationMapImg" style="display: none;">
-          <!-- 👆👆 추가 완료 👆👆 -->
-
-          <div id="daumRoughmapContainer1704256800000" class="root_daum_roughmap roughmapContainer"></div>
-          <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/roughmap/loader.js"></script>
-          <script charset="UTF-8">
-            new daum.roughmap.Lander({
-              "timestamp" : "1704256800000",
-              "key" : "2hm3s",
-              "mapWidth" : "100%",
-              "mapHeight" : "260"
-            }).render();
-          </script>
+          
+          <!-- 👇👇 충돌 없는 iframe 방식으로 변경 👇👇 -->
+          <iframe 
+            src="https://m.map.kakao.com/actions/detailMapView?id=12140656&viewmap=true" 
+            width="100%" 
+            height="100%" 
+            frameborder="0" 
+            style="border:0;" 
+            allowfullscreen>
+          </iframe>
+          <!-- 👆👆 변경 완료 👆👆 -->
+          
         </div>
 
         <div class="location__links animate-item" data-animate="fade-up">

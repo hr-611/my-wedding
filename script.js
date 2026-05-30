@@ -125,19 +125,34 @@
      Curtain (Watercolor Wash)
      ═══════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════
+     Curtain (Watercolor Wash - 버튼 안 눌리는 오류 완벽 해결 🔓)
+     ═══════════════════════════════════════════ */
+
   function initCurtain() {
     const curtain = $('#curtain');
     const btn = $('#curtainBtn');
     const namesEl = $('#curtainNames');
 
-    if (CONFIG.useCurtain === false) {
+    if (!curtain || !btn) return;
+
+    // CONFIG 값이 혹시 안 불러와졌을 때를 대비한 안전장치
+    const groomName = (typeof CONFIG !== 'undefined' && CONFIG.groom) ? CONFIG.groom.name : '신랑';
+    const brideName = (typeof CONFIG !== 'undefined' && CONFIG.bride) ? CONFIG.bride.name : '신부';
+    const useCurtain = (typeof CONFIG !== 'undefined') ? CONFIG.useCurtain : true;
+
+    if (useCurtain === false) {
       curtain.style.display = 'none';
+      document.body.classList.remove('no-scroll');
       initSparkles();
       return;
     }
 
-    namesEl.textContent = `${CONFIG.groom.name}  &  ${CONFIG.bride.name}`;
+    if (namesEl) {
+      namesEl.textContent = `${groomName}  &  ${brideName}`;
+    }
 
+    // 💡 버튼을 누르면 에러 없이 무조건 막이 열리고 스크롤이 풀리도록 고쳤습니다!
     btn.addEventListener('click', () => {
       curtain.classList.add('is-open');
       document.body.classList.remove('no-scroll');
